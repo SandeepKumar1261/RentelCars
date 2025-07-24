@@ -1,0 +1,60 @@
+<div class="container">
+  <h1 class="title">Rental Cars Management</h1>
+
+  <!-- Add Button -->
+  <div class="add-button-wrapper">
+    <button (click)="openAddModal()" class="add-button">Add Car</button>
+  </div>
+
+  <!-- Car List -->
+  <table class="car-table">
+    <thead>
+      <tr>
+        <th>Image</th>
+        <th>Car Name</th>
+        <th>Model</th>
+        <th>Type</th>
+        <th>Rent/Day ($)</th>
+        <th>Deposit ($)</th>
+        <th>Status</th>
+        <th>Fuel Type</th>
+        <th>Actions</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let car of cars">
+        <td>
+          <img
+            [src]="car.ImageLink"
+            alt="{{ car.CarName }}"
+            class="car-image"
+          />
+        </td>
+        <td>{{ car.CarName }}</td>
+        <td>{{ car.Model }}</td>
+        <td>{{ car.CarType }}</td>
+        <td>{{ car.RentPerDay }}</td>
+        <td>{{ car.Deposit }}</td>
+        <td>{{ car.AvailabilityStatus }}</td>
+        <td>{{ car.FuelType }}</td>
+        <td>
+          <button (click)="openEditModal(car)" class="edit-button">Edit</button>
+          <button (click)="deleteCar(car.id)" class="delete-button">
+            Delete
+          </button>
+        </td>
+      </tr>
+    </tbody>
+  </table>
+
+  <!-- Modal -->
+  <div *ngIf="showModal" class="modal-overlay">
+    <div class="modal-content">
+      <app-add-edit
+        [car]="selectedCar"
+        (save)="handleSave($event)"
+        (cancel)="closeModal()"
+      ></app-add-edit>
+    </div>
+  </div>
+</div>

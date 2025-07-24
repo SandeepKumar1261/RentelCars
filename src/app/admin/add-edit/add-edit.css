@@ -1,0 +1,33 @@
+.p-4 {
+  width: 100%;
+}
+
+input,
+select {
+  border: 1px solid #ccc;
+  outline: none;
+  width: 100%;
+  padding: 8px;
+}
+
+input:invalid,
+select:invalid {
+  border-color: red;
+}
+
+.text-xl {
+  font-size: 1.25rem;
+}
+
+.mb-4 {
+  margin-bottom: 1rem;
+}
+
+.flex.justify-end {
+  display: flex;
+  justify-content: flex-end;
+}
+
+button {
+  padding: 8px 16px;
+}
