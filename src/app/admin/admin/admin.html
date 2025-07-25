@@ -25,7 +25,7 @@
       <tr *ngFor="let car of cars">
         <td>
           <img
-            [src]="car.ImageLink"
+            src="assets/{{car.ImageLink}}"
             alt="{{ car.CarName }}"
             class="car-image"
           />

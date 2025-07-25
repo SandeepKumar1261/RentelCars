@@ -45,7 +45,6 @@ export class Admin implements OnInit {
 
   handleSave(car: Car) {
     if (this.selectedCar && this.selectedCar.id) {
-      // Update existing car
       this.carsService.updateCar(this.selectedCar.id, car).subscribe({
         next: () => {
           console.log('Car updated:', car);
