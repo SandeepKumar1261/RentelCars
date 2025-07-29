@@ -1,33 +1,132 @@
-.p-4 {
+.modal-inner {
   width: 100%;
+  max-width: 500px;
+  background-color: #fff;
+  padding: 1rem 1.25rem;
+  border-radius: 8px;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
+  box-sizing: border-box;
 }
 
-input,
-select {
-  border: 1px solid #ccc;
-  outline: none;
-  width: 100%;
-  padding: 8px;
-}
-
-input:invalid,
-select:invalid {
-  border-color: red;
-}
-
-.text-xl {
-  font-size: 1.25rem;
-}
-
-.mb-4 {
+/* Title */
+.modal-title {
+  font-size: 1.3rem;
   margin-bottom: 1rem;
+  text-align: center;
+  font-weight: 600;
+  color: #333;
 }
 
-.flex.justify-end {
+/* Form */
+form {
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+}
+
+/* Group wrapper */
+.form-group {
+  display: flex;
+  flex-direction: column;
+  margin-bottom: 0.5rem;
+}
+
+/* Labels */
+.form-label {
+  margin-bottom: 0.25rem;
+  font-size: 0.85rem;
+  font-weight: 500;
+  color: #444;
+}
+
+/* Compact Inputs & Selects */
+.form-input {
+  padding: 0.35rem 0.6rem;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  font-size: 0.85rem;
+  height: 32px;
+  line-height: 1;
+}
+
+.form-input:focus {
+  border-color: #007bff;
+  outline: none;
+}
+
+/* File Upload */
+.file-input {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.file-input-field {
+  padding: 0.35rem;
+  font-size: 0.85rem;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+}
+
+.file-input-label {
+  padding: 0.35rem 0.6rem;
+  background-color: #007bff;
+  color: #fff;
+  border-radius: 5px;
+  font-size: 0.8rem;
+  cursor: pointer;
+}
+
+/* Button Group */
+.button-group {
   display: flex;
   justify-content: flex-end;
+  gap: 0.5rem;
+  margin-top: 0.75rem;
 }
 
-button {
-  padding: 8px 16px;
+.save-btn,
+.cancel-btn {
+  padding: 0.4rem 0.8rem;
+  font-size: 0.85rem;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+}
+
+.save-btn {
+  background-color: #28a745;
+  color: white;
+}
+
+.cancel-btn {
+  background-color: #dc3545;
+  color: white;
+}
+
+/* Responsive for small screens */
+@media (max-width: 600px) {
+  .modal-inner {
+    padding: 0.75rem 1rem;
+  }
+
+  .modal-title {
+    font-size: 1.1rem;
+  }
+
+  .form-label {
+    font-size: 0.8rem;
+  }
+
+  .form-input,
+  .file-input-field {
+    font-size: 0.8rem;
+    height: 30px;
+  }
+
+  .save-btn,
+  .cancel-btn {
+    font-size: 0.8rem;
+    padding: 0.35rem 0.75rem;
+  }
 }

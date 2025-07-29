@@ -10,8 +10,23 @@ import { CarService } from '../../services/car-service';
 })
 export class Admin implements OnInit {
   cars: Car[] = [];
+  filteredCars: Car[] = [];
+  pagedCars: Car[] = [];
+
   showModal: boolean = false;
   selectedCar: Car | null = null;
+
+  // Filtering, Sorting, Pagination
+  filter = {
+    CarName: '',
+    Model: '',
+    AvailabilityStatus: '',
+    FuelType: '',
+  };
+  sortOption = '';
+  currentPage = 1;
+  pageSize = 8;
+  totalPages = 1;
 
   constructor(private carsService: CarService) {}
 
@@ -22,42 +37,99 @@ export class Admin implements OnInit {
   loadCars() {
     this.carsService.getCars().subscribe({
       next: (data) => {
-        console.log('Cars loaded:', data);
         this.cars = data;
+        this.filteredCars = data;
+        this.applyFilters();
       },
       error: (err) => console.error('CarService error:', err),
     });
   }
 
+  applyFilters() {
+    let filtered = this.cars.filter((car) => {
+      return (
+        (!this.filter.CarName ||
+          car.CarName.toLowerCase().includes(
+            this.filter.CarName.toLowerCase()
+          )) &&
+        (!this.filter.Model ||
+          car.Model.toLowerCase().includes(this.filter.Model.toLowerCase())) &&
+        (!this.filter.AvailabilityStatus ||
+          car.AvailabilityStatus === this.filter.AvailabilityStatus) &&
+        (!this.filter.FuelType || car.FuelType === this.filter.FuelType)
+      );
+    });
+
+    switch (this.sortOption) {
+      case 'rentAsc':
+        filtered.sort((a, b) => a.RentPerDay - b.RentPerDay);
+        break;
+      case 'rentDesc':
+        filtered.sort((a, b) => b.RentPerDay - a.RentPerDay);
+        break;
+      case 'modelAsc':
+        filtered.sort((a, b) => a.Model.localeCompare(b.Model));
+        break;
+      case 'modelDesc':
+        filtered.sort((a, b) => b.Model.localeCompare(a.Model));
+        break;
+    }
+
+    this.filteredCars = filtered;
+    this.currentPage = 1;
+    this.updatePagination();
+  }
+
+  updatePagination() {
+    this.totalPages = Math.ceil(this.filteredCars.length / this.pageSize);
+    const start = (this.currentPage - 1) * this.pageSize;
+    const end = start + this.pageSize;
+    this.pagedCars = this.filteredCars.slice(start, end);
+  }
+
+  nextPage() {
+    if (this.currentPage < this.totalPages) {
+      this.currentPage++;
+      this.updatePagination();
+    }
+  }
+
+  prevPage() {
+    if (this.currentPage > 1) {
+      this.currentPage--;
+      this.updatePagination();
+    }
+  }
+
   openAddModal() {
-    console.log('Opening add modal');
     this.selectedCar = null;
     this.showModal = true;
-    console.log('showModal:', this.showModal);
   }
 
   openEditModal(car: Car) {
-    console.log('Opening edit modal for car:', car);
     this.selectedCar = { ...car };
     this.showModal = true;
-    console.log('showModal:', this.showModal);
   }
 
   handleSave(car: Car) {
-    if (this.selectedCar && this.selectedCar.id) {
-      this.carsService.updateCar(this.selectedCar.id, car).subscribe({
+    const formData = new FormData();
+    Object.entries(car).forEach(([key, value]) => {
+      if (value !== undefined && value !== null) {
+        formData.append(key, value as any);
+      }
+    });
+
+    if (this.selectedCar && this.selectedCar._id) {
+      this.carsService.updateCar(this.selectedCar._id, formData).subscribe({
         next: () => {
-          console.log('Car updated:', car);
           this.loadCars();
           this.closeModal();
         },
         error: (err) => console.error('Update error:', err),
       });
     } else {
-      // Add new car
-      this.carsService.addCar(car).subscribe({
+      this.carsService.addCar(formData).subscribe({
         next: () => {
-          console.log('Car added:', car);
           this.loadCars();
           this.closeModal();
         },
@@ -69,17 +141,13 @@ export class Admin implements OnInit {
   deleteCar(id: string) {
     if (confirm('Are you sure you want to delete this car?')) {
       this.carsService.deleteCar(id).subscribe({
-        next: () => {
-          console.log('Car deleted:', id);
-          this.loadCars();
-        },
+        next: () => this.loadCars(),
         error: (err) => console.error('Delete error:', err),
       });
     }
   }
 
   closeModal() {
-    console.log('Closing modal');
     this.showModal = false;
     this.selectedCar = null;
   }

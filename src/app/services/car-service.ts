@@ -11,19 +11,20 @@ export class CarService {
 
   constructor(private http: HttpClient) {}
 
-  getCars(): Observable<Car[]> {
-    return this.http.get<Car[]>(this.apiUrl);
+  addCar(formData: FormData): Observable<any> {
+    return this.http.post(this.apiUrl, formData);
   }
 
-  addCar(car: Car): Observable<Car> {
-    return this.http.post<Car>(this.apiUrl, { ...car, id: undefined });
+  updateCar(id: string, formData: FormData): Observable<any> {
+    console.log('in the upadetd car');
+    return this.http.put(`${this.apiUrl}/${id}`, formData);
   }
 
-  updateCar(id: string, car: Car): Observable<Car> {
-    return this.http.put<Car>(`${this.apiUrl}/${id}`, car);
+  deleteCar(id: string): Observable<any> {
+    return this.http.delete(`${this.apiUrl}/${id}`);
   }
 
-  deleteCar(id: string): Observable<void> {
-    return this.http.delete<void>(`${this.apiUrl}/${id}`);
+  getCars(): Observable<any> {
+    return this.http.get(this.apiUrl);
   }
 }

@@ -1,51 +1,87 @@
 <div class="container">
   <h1 class="title">Rental Cars Management</h1>
 
-  <!-- Add Button -->
-  <div class="add-button-wrapper">
-    <button (click)="openAddModal()" class="add-button">Add Car</button>
+  <!-- Filter Section -->
+  <div class="filter-grid">
+    <input
+      type="text"
+      placeholder="Search by Car Name"
+      [(ngModel)]="filter.CarName"
+      (input)="applyFilters()"
+    />
+    <input
+      type="text"
+      placeholder="Search by Model"
+      [(ngModel)]="filter.Model"
+      (input)="applyFilters()"
+    />
+    <select [(ngModel)]="filter.AvailabilityStatus" (change)="applyFilters()">
+      <option value="">All Status</option>
+      <option value="Available">Available</option>
+      <option value="Unavailable">Unavailable</option>
+    </select>
+    <select [(ngModel)]="filter.FuelType" (change)="applyFilters()">
+      <option value="">All Fuel Types</option>
+      <option value="Gasoline">Gasoline</option>
+      <option value="Diesel">Diesel</option>
+      <option value="Electric">Electric</option>
+    </select>
   </div>
 
-  <!-- Car List -->
-  <table class="car-table">
-    <thead>
-      <tr>
-        <th>Image</th>
-        <th>Car Name</th>
-        <th>Model</th>
-        <th>Type</th>
-        <th>Rent/Day ($)</th>
-        <th>Deposit ($)</th>
-        <th>Status</th>
-        <th>Fuel Type</th>
-        <th>Actions</th>
-      </tr>
-    </thead>
-    <tbody>
-      <tr *ngFor="let car of cars">
-        <td>
-          <img
-            src="assets/{{car.ImageLink}}"
-            alt="{{ car.CarName }}"
-            class="car-image"
-          />
-        </td>
-        <td>{{ car.CarName }}</td>
-        <td>{{ car.Model }}</td>
-        <td>{{ car.CarType }}</td>
-        <td>{{ car.RentPerDay }}</td>
-        <td>{{ car.Deposit }}</td>
-        <td>{{ car.AvailabilityStatus }}</td>
-        <td>{{ car.FuelType }}</td>
-        <td>
-          <button (click)="openEditModal(car)" class="edit-button">Edit</button>
-          <button (click)="deleteCar(car.id)" class="delete-button">
-            Delete
-          </button>
-        </td>
-      </tr>
-    </tbody>
-  </table>
+  <!-- Sort Section -->
+  <div class="sort-container">
+    <div class="sort-select">
+      <label>Sort by:</label>
+      <select [(ngModel)]="sortOption" (change)="applyFilters()">
+        <option value="">Default</option>
+        <option value="rentAsc">Rent/Day ↑</option>
+        <option value="rentDesc">Rent/Day ↓</option>
+        <option value="modelAsc">Model A-Z</option>
+        <option value="modelDesc">Model Z-A</option>
+      </select>
+    </div>
+    <button class="add-button" (click)="openAddModal()">Add Car</button>
+  </div>
+
+  <div *ngIf="pagedCars.length > 0; else noResults" class="car-grid">
+    <div class="car-card" *ngFor="let car of pagedCars">
+      <div class="card-image-wrapper">
+        <img [src]="car.ImageLink" alt="{{ car.CarName }}" class="car-image" />
+      </div>
+      <h3 class="car-name">{{ car.CarName }}</h3>
+      <div class="car-details">
+        <p><strong>Model:</strong> {{ car.Model }}</p>
+        <p><strong>Type:</strong> {{ car.CarType }}</p>
+        <p><strong>Rent/Day:</strong> ${{ car.RentPerDay }}</p>
+        <p><strong>Deposit:</strong> ${{ car.Deposit }}</p>
+        <p><strong>Status:</strong> {{ car.AvailabilityStatus }}</p>
+        <p><strong>Fuel:</strong> {{ car.FuelType }}</p>
+      </div>
+      <div class="card-actions">
+        <button (click)="openEditModal(car)" class="edit-button">Edit</button>
+        <button (click)="deleteCar(car._id)" class="delete-button">
+          Delete
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <ng-template #noResults>
+    <div class="no-results">🚗 No cars found matching your criteria.</div>
+  </ng-template>
+
+  <!-- Pagination -->
+  <div class="pagination-container">
+    <div class="pagination">
+      <button (click)="prevPage()" [disabled]="currentPage === 1">
+        Previous
+      </button>
+      <span>Page {{ currentPage }} / {{ totalPages }}</span>
+      <button (click)="nextPage()" [disabled]="currentPage === totalPages">
+        Next
+      </button>
+    </div>
+  </div>
 
   <!-- Modal -->
   <div *ngIf="showModal" class="modal-overlay">

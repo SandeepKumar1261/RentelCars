@@ -1,61 +1,72 @@
-<div class="p-4">
-  <h2 class="text-xl font-bold mb-4">{{ car ? 'Edit Car' : 'Add Car' }}</h2>
+<div class="modal-inner">
+  <h2 class="modal-title">{{ car ? 'Edit Car' : 'Add Car' }}</h2>
   <form (ngSubmit)="onSubmit()">
-    <div class="mb-4">
-      <label class="block text-gray-700">Car Name</label>
+    <!-- Car Name -->
+    <div class="form-group">
+      <label class="form-label">Car Name</label>
       <input
         [(ngModel)]="formCar.CarName"
         name="CarName"
-        class="w-full p-2 border rounded"
+        class="form-input"
         required
       />
     </div>
-    <div class="mb-4">
-      <label class="block text-gray-700">Model</label>
+
+    <!-- Model -->
+    <div class="form-group">
+      <label class="form-label">Model</label>
       <input
         [(ngModel)]="formCar.Model"
         name="Model"
-        class="w-full p-2 border rounded"
+        class="form-input"
         required
       />
     </div>
-    <div class="mb-4">
-      <label class="block text-gray-700">Car Type</label>
+
+    <!-- Car Type -->
+    <div class="form-group">
+      <label class="form-label">Car Type</label>
       <input
         [(ngModel)]="formCar.CarType"
         name="CarType"
-        class="w-full p-2 border rounded"
+        class="form-input"
         required
       />
     </div>
-    <div class="mb-4">
-      <label class="block text-gray-700">Rent Per Day ($)</label>
+
+    <!-- Rent Per Day -->
+    <div class="form-group">
+      <label class="form-label">Rent Per Day ($)</label>
       <input
         [(ngModel)]="formCar.RentPerDay"
         name="RentPerDay"
         type="number"
-        class="w-full p-2 border rounded"
         min="1"
+        class="form-input"
         required
       />
     </div>
-    <div class="mb-4">
-      <label class="block text-gray-700">Deposit ($)</label>
+
+    <!-- Deposit -->
+    <div class="form-group">
+      <label class="form-label">Deposit ($)</label>
       <input
         [(ngModel)]="formCar.Deposit"
         name="Deposit"
         type="number"
-        class="w-full p-2 border rounded"
         min="1"
+        class="form-input"
         required
       />
     </div>
-    <div class="mb-4">
-      <label class="block text-gray-700">Fuel Type</label>
+
+    <!-- Fuel Type -->
+    <div class="form-group">
+      <label class="form-label">Fuel Type</label>
       <select
         [(ngModel)]="formCar.FuelType"
         name="FuelType"
-        class="w-full p-2 border rounded"
+        class="form-input"
         required
       >
         <option value="Gasoline">Gasoline</option>
@@ -63,28 +74,42 @@
         <option value="Electric">Electric</option>
       </select>
     </div>
-    <div class="mb-4">
-      <label class="block text-gray-700">Image Link</label>
-      <input
-        [(ngModel)]="formCar.ImageLink"
-        name="ImageLink"
-        class="w-full p-2 border rounded"
-      />
-    </div>
-    <div class="flex justify-end">
-      <button
-        type="button"
-        (click)="onCancel()"
-        class="bg-gray-500 text-white px-4 py-2 rounded mr-2 hover:bg-gray-600"
+
+    <!-- Availability Status -->
+    <div class="form-group">
+      <label class="form-label">Availability Status</label>
+      <select
+        [(ngModel)]="formCar.AvailabilityStatus"
+        name="AvailabilityStatus"
+        class="form-input"
+        required
       >
+        <option value="Available">Available</option>
+        <option value="Unavailable">Unavailable</option>
+      </select>
+    </div>
+
+    <!-- Image Upload -->
+    <div class="form-group">
+      <label class="form-label">Car Image</label>
+      <div class="file-input">
+        <input
+          type="file"
+          (change)="onFileChange($event)"
+          class="file-input-field"
+          accept="image/*"
+        />
+        <label class="file-input-label" for="fileInput">Choose File</label>
+        <span class="file-name"></span>
+      </div>
+    </div>
+
+    <!-- Action Buttons -->
+    <div class="button-group">
+      <button type="button" (click)="onCancel()" class="cancel-btn">
         Cancel
       </button>
-      <button
-        type="submit"
-        class="bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-600"
-      >
-        Save
-      </button>
+      <button type="submit" class="save-btn">Save</button>
     </div>
   </form>
 </div>
