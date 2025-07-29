@@ -1,10 +1,13 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
+import { Dashboard } from './dashboard/dashboard';
 
 
 
 @NgModule({
-  declarations: [],
+  declarations: [
+    Dashboard
+  ],
   imports: [
     CommonModule
   ]

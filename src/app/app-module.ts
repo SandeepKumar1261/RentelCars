@@ -6,10 +6,17 @@ import { App } from './app';
 import { AdminModule } from './admin/admin-module';
 import { provideHttpClient } from '@angular/common/http';
 import { AuthModule } from './auth/auth-module';
+import { DashboardModule } from './dashboard/dashboard-module';
 
 @NgModule({
   declarations: [App],
-  imports: [BrowserModule, AppRoutingModule, AdminModule, AuthModule],
+  imports: [
+    BrowserModule,
+    AppRoutingModule,
+    AdminModule,
+    AuthModule,
+    DashboardModule,
+  ],
   providers: [provideBrowserGlobalErrorListeners(), provideHttpClient()],
   bootstrap: [App],
 })

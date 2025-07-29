@@ -3,11 +3,13 @@ import { RouterModule, Routes } from '@angular/router';
 import { Admin } from './admin/admin/admin';
 import { Signup } from './auth/signup/signup';
 import { Login } from './auth/login/login';
+import { Dashboard } from './dashboard/dashboard/dashboard';
 
 const routes: Routes = [
   { path: 'signup', component: Signup },
   { path: 'login', component: Login },
   { path: 'admin', component: Admin },
+  { path: 'dashboard', component: Dashboard },
 ];
 
 @NgModule({
