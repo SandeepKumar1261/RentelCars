@@ -5,10 +5,11 @@ import { AppRoutingModule } from './app-routing-module';
 import { App } from './app';
 import { AdminModule } from './admin/admin-module';
 import { provideHttpClient } from '@angular/common/http';
+import { AuthModule } from './auth/auth-module';
 
 @NgModule({
   declarations: [App],
-  imports: [BrowserModule, AppRoutingModule, AdminModule],
+  imports: [BrowserModule, AppRoutingModule, AdminModule, AuthModule],
   providers: [provideBrowserGlobalErrorListeners(), provideHttpClient()],
   bootstrap: [App],
 })

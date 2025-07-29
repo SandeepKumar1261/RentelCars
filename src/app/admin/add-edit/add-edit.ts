@@ -6,8 +6,7 @@ import {
   OnChanges,
   SimpleChanges,
 } from '@angular/core';
-import { Car } from '../../model/car';
-import { CarService } from '../../services/car-service';
+import { CarServices } from '../../services/car/car-services';
 
 @Component({
   selector: 'app-add-edit',
@@ -32,7 +31,7 @@ export class AddEdit {
 
   selectedFile: File | null = null;
 
-  constructor(private carService: CarService) {}
+  constructor(private carService: CarServices) {}
 
   ngOnInit(): void {
     if (this.car) {

@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { Car } from '../../model/car';
-import { CarService } from '../../services/car-service';
+import { CarServices } from '../../services/car/car-services';
 
 @Component({
   selector: 'app-admin',
@@ -28,7 +28,7 @@ export class Admin implements OnInit {
   pageSize = 8;
   totalPages = 1;
 
-  constructor(private carsService: CarService) {}
+  constructor(private carsService: CarServices) {}
 
   ngOnInit() {
     this.loadCars();
