@@ -18,10 +18,10 @@
       />
       <div
         class="error text-red-500 text-sm"
-        *ngIf="f.email.touched && f.email.invalid"
+        *ngIf="f['email'].touched && f['email'].invalid"
       >
-        <span *ngIf="f.email.errors?.['required']">Email is required</span>
-        <span *ngIf="f.email.errors?.['email']">Enter a valid email</span>
+        <span *ngIf="f['email'].errors?.['required']">Email is required</span>
+        <span *ngIf="f['email'].errors?.['email']">Enter a valid email</span>
       </div>
     </div>
 
@@ -35,9 +35,9 @@
       />
       <div
         class="error text-red-500 text-sm"
-        *ngIf="f.password.touched && f.password.invalid"
+        *ngIf="f['password'].touched && f['password'].invalid"
       >
-        <span *ngIf="f.password.errors?.['required']"
+        <span *ngIf="f['password'].errors?.['required']"
           >Password is required</span
         >
       </div>
