@@ -44,10 +44,12 @@ export class Login {
 
         localStorage.setItem('token', response.token);
         if (response.user.role === 'admin') {
-          localStorage.setItem('isAdmin', 'true');
+          localStorage.setItem('isAdmin', 'admin');
           this.router.navigate(['/admin']);
+        } else {
+          localStorage.setItem('isAdmin', 'user');
+          this.router.navigate(['/']);
         }
-        this.router.navigate(['/dashboard']);
       },
       error: (err) => {
         console.error('Login failed:', err);

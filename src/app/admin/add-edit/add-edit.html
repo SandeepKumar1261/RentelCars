@@ -1,115 +1,133 @@
-<div class="modal-inner">
-  <h2 class="modal-title">{{ car ? 'Edit Car' : 'Add Car' }}</h2>
-  <form (ngSubmit)="onSubmit()">
-    <!-- Car Name -->
-    <div class="form-group">
-      <label class="form-label">Car Name</label>
-      <input
-        [(ngModel)]="formCar.CarName"
-        name="CarName"
-        class="form-input"
-        required
-      />
-    </div>
-
-    <!-- Model -->
-    <div class="form-group">
-      <label class="form-label">Model</label>
-      <input
-        [(ngModel)]="formCar.Model"
-        name="Model"
-        class="form-input"
-        required
-      />
-    </div>
-
-    <!-- Car Type -->
-    <div class="form-group">
-      <label class="form-label">Car Type</label>
-      <input
-        [(ngModel)]="formCar.CarType"
-        name="CarType"
-        class="form-input"
-        required
-      />
-    </div>
-
-    <!-- Rent Per Day -->
-    <div class="form-group">
-      <label class="form-label">Rent Per Day ($)</label>
-      <input
-        [(ngModel)]="formCar.RentPerDay"
-        name="RentPerDay"
-        type="number"
-        min="1"
-        class="form-input"
-        required
-      />
-    </div>
-
-    <!-- Deposit -->
-    <div class="form-group">
-      <label class="form-label">Deposit ($)</label>
-      <input
-        [(ngModel)]="formCar.Deposit"
-        name="Deposit"
-        type="number"
-        min="1"
-        class="form-input"
-        required
-      />
-    </div>
-
-    <!-- Fuel Type -->
-    <div class="form-group">
-      <label class="form-label">Fuel Type</label>
-      <select
-        [(ngModel)]="formCar.FuelType"
-        name="FuelType"
-        class="form-input"
-        required
+<div
+  class="fixed inset-0 bg-black bg-opacity-50 z-50 flex items-center justify-center"
+  style="overflow: hidden"
+>
+  <div
+    class="bg-white rounded-xl shadow-lg w-full max-w-3xl max-h-[90vh] overflow-y-auto p-6 mx-4 md:mx-8 animate-fade-in"
+  >
+    <div class="flex justify-between items-center mb-4">
+      <h2 class="text-2xl font-bold">{{ car ? 'Edit Car' : 'Add Car' }}</h2>
+      <button
+        type="button"
+        (click)="onCancel()"
+        class="text-gray-500 hover:text-black text-2xl font-bold"
       >
-        <option value="Gasoline">Gasoline</option>
-        <option value="Diesel">Diesel</option>
-        <option value="Electric">Electric</option>
-      </select>
-    </div>
-
-    <!-- Availability Status -->
-    <div class="form-group">
-      <label class="form-label">Availability Status</label>
-      <select
-        [(ngModel)]="formCar.AvailabilityStatus"
-        name="AvailabilityStatus"
-        class="form-input"
-        required
-      >
-        <option value="Available">Available</option>
-        <option value="Unavailable">Unavailable</option>
-      </select>
-    </div>
-
-    <!-- Image Upload -->
-    <div class="form-group">
-      <label class="form-label">Car Image</label>
-      <div class="file-input">
-        <input
-          type="file"
-          (change)="onFileChange($event)"
-          class="file-input-field"
-          accept="image/*"
-        />
-        <label class="file-input-label" for="fileInput">Choose File</label>
-        <span class="file-name"></span>
-      </div>
-    </div>
-
-    <!-- Action Buttons -->
-    <div class="button-group">
-      <button type="button" (click)="onCancel()" class="cancel-btn">
-        Cancel
+        &times;
       </button>
-      <button type="submit" class="save-btn">Save</button>
     </div>
-  </form>
+
+    <!-- Error Message -->
+    <div *ngIf="errorMsg" class="mb-4 text-red-600 font-semibold text-center">
+      {{ errorMsg }}
+    </div>
+
+    <form (ngSubmit)="onSubmit()">
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+        <div>
+          <label class="block text-sm font-medium mb-1">Car Name</label>
+          <input
+            type="text"
+            [(ngModel)]="formCar.CarName"
+            name="CarName"
+            class="w-full border rounded px-3 py-2"
+            required
+          />
+        </div>
+        <div>
+          <label class="block text-sm font-medium mb-1">Model</label>
+          <input
+            type="text"
+            [(ngModel)]="formCar.Model"
+            name="Model"
+            class="w-full border rounded px-3 py-2"
+            required
+          />
+        </div>
+        <div>
+          <label class="block text-sm font-medium mb-1">Car Type</label>
+          <input
+            type="text"
+            [(ngModel)]="formCar.CarType"
+            name="CarType"
+            class="w-full border rounded px-3 py-2"
+            required
+          />
+        </div>
+        <div>
+          <label class="block text-sm font-medium mb-1">Rent Per Day ($)</label>
+          <input
+            type="number"
+            [(ngModel)]="formCar.RentPerDay"
+            name="RentPerDay"
+            class="w-full border rounded px-3 py-2"
+            required
+            min="0"
+          />
+        </div>
+        <div>
+          <label class="block text-sm font-medium mb-1">Deposit ($)</label>
+          <input
+            type="number"
+            [(ngModel)]="formCar.Deposit"
+            name="Deposit"
+            class="w-full border rounded px-3 py-2"
+            required
+            min="0"
+          />
+        </div>
+        <div>
+          <label class="block text-sm font-medium mb-1">Fuel Type</label>
+          <select
+            [(ngModel)]="formCar.FuelType"
+            name="FuelType"
+            class="w-full border rounded px-3 py-2"
+            required
+          >
+            <option value="Petrol">Petrol</option>
+            <option value="Diesel">Diesel</option>
+            <option value="Gasoline">Gasoline</option>
+            <option value="Electric">Electric</option>
+          </select>
+        </div>
+        <div>
+          <label class="block text-sm font-medium mb-1"
+            >Availability Status</label
+          >
+          <select
+            [(ngModel)]="formCar.AvailabilityStatus"
+            name="AvailabilityStatus"
+            class="w-full border rounded px-3 py-2"
+            required
+          >
+            <option value="Available">Available</option>
+            <option value="Unavailable">Unavailable</option>
+          </select>
+        </div>
+        <div class="md:col-span-2">
+          <label class="block text-sm font-medium mb-1">Car Image</label>
+          <input
+            type="file"
+            (change)="onFileChange($event)"
+            class="w-full border rounded px-3 py-2"
+            accept="image/*"
+          />
+        </div>
+      </div>
+      <div class="flex justify-end mt-6 gap-3">
+        <button
+          type="button"
+          (click)="onCancel()"
+          class="px-4 py-2 border rounded"
+        >
+          Cancel
+        </button>
+        <button
+          type="submit"
+          class="px-4 py-2 bg-blue-600 text-white rounded hover:bg-blue-700"
+        >
+          {{ car ? 'Update' : 'Save' }}
+        </button>
+      </div>
+    </form>
+  </div>
 </div>

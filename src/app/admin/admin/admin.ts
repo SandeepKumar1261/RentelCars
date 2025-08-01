@@ -90,6 +90,7 @@ export class Admin implements OnInit {
   nextPage() {
     if (this.currentPage < this.totalPages) {
       this.currentPage++;
+      window.scrollTo({ top: 0, behavior: 'smooth' });
       this.updatePagination();
     }
   }
@@ -97,6 +98,7 @@ export class Admin implements OnInit {
   prevPage() {
     if (this.currentPage > 1) {
       this.currentPage--;
+      window.scrollTo({ top: 0, behavior: 'smooth' });
       this.updatePagination();
     }
   }

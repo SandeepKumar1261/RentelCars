@@ -1,26 +1,38 @@
-<div class="container">
-  <h1 class="title">Rental Cars Management</h1>
+<div class="max-w-7xl mx-auto px-4 py-6">
+  <h1 class="text-3xl font-bold text-center text-gray-800 mb-6">
+    Rental Cars Management
+  </h1>
 
   <!-- Filter Section -->
-  <div class="filter-grid">
+  <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-4 mb-6">
     <input
       type="text"
       placeholder="Search by Car Name"
       [(ngModel)]="filter.CarName"
       (input)="applyFilters()"
+      class="w-full p-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
     />
     <input
       type="text"
       placeholder="Search by Model"
       [(ngModel)]="filter.Model"
       (input)="applyFilters()"
+      class="w-full p-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
     />
-    <select [(ngModel)]="filter.AvailabilityStatus" (change)="applyFilters()">
+    <select
+      [(ngModel)]="filter.AvailabilityStatus"
+      (change)="applyFilters()"
+      class="w-full p-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
+    >
       <option value="">All Status</option>
       <option value="Available">Available</option>
       <option value="Unavailable">Unavailable</option>
     </select>
-    <select [(ngModel)]="filter.FuelType" (change)="applyFilters()">
+    <select
+      [(ngModel)]="filter.FuelType"
+      (change)="applyFilters()"
+      class="w-full p-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
+    >
       <option value="">All Fuel Types</option>
       <option value="Gasoline">Gasoline</option>
       <option value="Diesel">Diesel</option>
@@ -29,10 +41,16 @@
   </div>
 
   <!-- Sort Section -->
-  <div class="sort-container">
-    <div class="sort-select">
-      <label>Sort by:</label>
-      <select [(ngModel)]="sortOption" (change)="applyFilters()">
+  <div
+    class="flex flex-col sm:flex-row justify-between items-center mb-6 gap-4"
+  >
+    <div class="flex items-center gap-2">
+      <label class="font-medium text-gray-700">Sort by:</label>
+      <select
+        [(ngModel)]="sortOption"
+        (change)="applyFilters()"
+        class="p-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
+      >
         <option value="">Default</option>
         <option value="rentAsc">Rent/Day ↑</option>
         <option value="rentDesc">Rent/Day ↓</option>
@@ -40,16 +58,32 @@
         <option value="modelDesc">Model Z-A</option>
       </select>
     </div>
-    <button class="add-button" (click)="openAddModal()">Add Car</button>
+    <button
+      class="bg-blue-600 hover:bg-blue-700 text-white font-medium py-2 px-4 rounded-md"
+      (click)="openAddModal()"
+    >
+      Add Car
+    </button>
   </div>
 
-  <div *ngIf="pagedCars.length > 0; else noResults" class="car-grid">
-    <div class="car-card" *ngFor="let car of pagedCars">
-      <div class="card-image-wrapper">
-        <img [src]="car.ImageLink" alt="{{ car.CarName }}" class="car-image" />
+  <!-- Car Cards Grid -->
+  <div
+    *ngIf="pagedCars.length > 0; else noResults"
+    class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6"
+  >
+    <div
+      *ngFor="let car of pagedCars"
+      class="bg-white shadow-md rounded-xl overflow-hidden border border-gray-200 flex flex-col"
+    >
+      <div class="w-full h-48 overflow-hidden">
+        <img
+          [src]="car.ImageLink"
+          alt="{{ car.CarName }}"
+          class="w-full h-full object-cover"
+        />
       </div>
-      <h3 class="car-name">{{ car.CarName }}</h3>
-      <div class="car-details">
+      <h3 class="text-xl font-semibold text-center mt-4">{{ car.CarName }}</h3>
+      <div class="px-4 py-2 text-sm text-gray-700 space-y-1">
         <p><strong>Model:</strong> {{ car.Model }}</p>
         <p><strong>Type:</strong> {{ car.CarType }}</p>
         <p><strong>Rent/Day:</strong> ${{ car.RentPerDay }}</p>
@@ -57,35 +91,57 @@
         <p><strong>Status:</strong> {{ car.AvailabilityStatus }}</p>
         <p><strong>Fuel:</strong> {{ car.FuelType }}</p>
       </div>
-      <div class="card-actions">
-        <button (click)="openEditModal(car)" class="edit-button">Edit</button>
-        <button (click)="deleteCar(car._id)" class="delete-button">
+      <div class="flex justify-between px-4 py-2 mt-auto">
+        <button
+          (click)="openEditModal(car)"
+          class="bg-yellow-500 hover:bg-yellow-600 text-white py-1 px-3 rounded-md text-sm"
+        >
+          Edit
+        </button>
+        <button
+          (click)="deleteCar(car._id)"
+          class="bg-red-500 hover:bg-red-600 text-white py-1 px-3 rounded-md text-sm"
+        >
           Delete
         </button>
       </div>
     </div>
   </div>
 
+  <!-- No Results Template -->
   <ng-template #noResults>
-    <div class="no-results">🚗 No cars found matching your criteria.</div>
+    <div class="text-center text-gray-500 mt-10 text-lg">
+      🚗 No cars found matching your criteria.
+    </div>
   </ng-template>
 
   <!-- Pagination -->
-  <div class="pagination-container">
-    <div class="pagination">
-      <button (click)="prevPage()" [disabled]="currentPage === 1">
+  <div class="flex justify-center mt-6">
+    <div class="flex items-center gap-4">
+      <button
+        (click)="prevPage()"
+        [disabled]="currentPage === 1"
+        class="px-4 py-1 rounded-md bg-gray-200 hover:bg-gray-300 disabled:opacity-50 disabled:cursor-not-allowed"
+      >
         Previous
       </button>
-      <span>Page {{ currentPage }} / {{ totalPages }}</span>
-      <button (click)="nextPage()" [disabled]="currentPage === totalPages">
+      <span class="text-sm font-medium text-gray-700"
+        >Page {{ currentPage }} / {{ totalPages }}</span
+      >
+      <button
+        (click)="nextPage()"
+        [disabled]="currentPage === totalPages"
+        class="px-4 py-1 rounded-md bg-gray-200 hover:bg-gray-300 disabled:opacity-50 disabled:cursor-not-allowed"
+      >
         Next
       </button>
     </div>
   </div>
-
-  <!-- Modal -->
-  <div *ngIf="showModal" class="modal-overlay">
-    <div class="modal-content">
+  <div
+    *ngIf="showModal"
+    class="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50"
+  >
+    <div class="bg-white p-6 rounded-lg shadow-lg max-w-lg w-full mx-4 md:mx-8">
       <app-add-edit
         [car]="selectedCar"
         (save)="handleSave($event)"

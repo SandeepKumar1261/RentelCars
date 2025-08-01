@@ -7,6 +7,7 @@ import { AdminModule } from './admin/admin-module';
 import { provideHttpClient } from '@angular/common/http';
 import { AuthModule } from './auth/auth-module';
 import { DashboardModule } from './dashboard/dashboard-module';
+import { SharedModule } from './shared/shared-module';
 
 @NgModule({
   declarations: [App],
@@ -16,6 +17,7 @@ import { DashboardModule } from './dashboard/dashboard-module';
     AdminModule,
     AuthModule,
     DashboardModule,
+    SharedModule,
   ],
   providers: [provideBrowserGlobalErrorListeners(), provideHttpClient()],
   bootstrap: [App],

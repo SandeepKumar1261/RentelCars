@@ -1,1 +1,36 @@
-<p>navbar works!</p>
+<nav
+  *ngIf="isAdmin"
+  class="bg-gray-800 text-white flex items-center justify-between p-4 shadow-md"
+>
+  <div class="text-xl font-semibold">
+    <a routerLink="/" class="hover:text-gray-300">🚗 CarRental</a>
+  </div>
+
+  <ul class="flex items-center space-x-6 text-sm">
+    <!-- Admin Links -->
+    <ng-container *ngIf="isAdmin === 'admin'">
+      <li><a routerLink="/users" class="hover:text-gray-400">Users</a></li>
+      <li><a routerLink="/cars" class="hover:text-gray-400">Cars</a></li>
+    </ng-container>
+
+    <!-- Normal User Links -->
+    <ng-container *ngIf="isAdmin === 'user'">
+      <li>
+        <a routerLink="/dashboard" class="hover:text-gray-400">Dashboard</a>
+      </li>
+      <li>
+        <a routerLink="/bookings" class="hover:text-gray-400">Bookings</a>
+      </li>
+    </ng-container>
+
+    <!-- Common Logout Button -->
+    <li>
+      <button
+        (click)="logout()"
+        class="bg-red-500 hover:bg-red-600 px-3 py-1 rounded text-sm"
+      >
+        Logout
+      </button>
+    </li>
+  </ul>
+</nav>
