@@ -1,1 +1,61 @@
-<p>dashboard works!</p>
+<div class="p-4 max-w-7xl mx-auto">
+  <h2 class="text-3xl font-bold mb-6 text-center opacity-0 animate-fadeIn">
+    🚘 Explore Cars
+  </h2>
+
+  <div
+    class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 opacity-0 animate-fadeIn delay-200"
+  >
+    <div
+      *ngFor="let car of cars"
+      class="bg-white rounded-2xl overflow-hidden shadow-md border border-gray-200 transform transition duration-300 hover:scale-105 hover:shadow-xl"
+    >
+      <img
+        [src]="car.ImageLink"
+        alt="{{ car.CarName }}"
+        class="w-full h-48 object-cover"
+      />
+
+      <div class="p-4 space-y-2">
+        <h3 class="text-lg font-semibold text-gray-800">
+          {{ car.CarName }} ({{ car.Model }})
+        </h3>
+
+        <div class="text-sm text-gray-600 space-y-1">
+          <p><strong>Type:</strong> {{ car.CarType }}</p>
+          <p><strong>Fuel:</strong> {{ car.FuelType }}</p>
+          <p>
+            <strong>Status:</strong>
+            <span
+              [ngClass]="{
+                'text-green-600': car.AvailabilityStatus === 'Available',
+                'text-red-600': car.AvailabilityStatus !== 'Available'
+              }"
+              >{{ car.AvailabilityStatus }}</span
+            >
+          </p>
+        </div>
+
+        <div class="text-blue-600 font-bold text-base pt-1">
+          ₹{{ car.RentPerDay }} / day
+        </div>
+        <p class="text-gray-500 text-xs">Deposit: ₹{{ car.Deposit }}</p>
+
+        <div class="mt-4 flex justify-between gap-2">
+          <button
+            (click)="viewCar(car._id)"
+            class="w-1/2 bg-blue-500 hover:bg-blue-600 text-white py-1 rounded text-sm"
+          >
+            View
+          </button>
+          <button
+            (click)="buyCar(car._id)"
+            class="w-1/2 bg-green-500 hover:bg-green-600 text-white py-1 rounded text-sm"
+          >
+            Book
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

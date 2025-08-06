@@ -130,6 +130,12 @@ export class Admin implements OnInit {
         error: (err) => console.error('Update error:', err),
       });
     } else {
+      if (formData.has('_id')) {
+        formData.delete('_id');
+      }
+
+      console.log(formData);
+
       this.carsService.addCar(formData).subscribe({
         next: () => {
           this.loadCars();

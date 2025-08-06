@@ -1,4 +1,4 @@
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 
@@ -10,20 +10,38 @@ export class CarServices {
 
   constructor(private http: HttpClient) {}
 
+  private getHeaders(): HttpHeaders {
+    const token = localStorage.getItem('token');
+    return new HttpHeaders({
+      Authorization: `Bearer ${token || ''}`,
+    });
+  }
+
   addCar(formData: FormData): Observable<any> {
-    return this.http.post(this.apiUrl, formData);
+    return this.http.post(this.apiUrl, formData, {
+      headers: this.getHeaders(),
+    });
   }
 
   updateCar(id: string, formData: FormData): Observable<any> {
-    console.log('in the upadetd car');
-    return this.http.put(`${this.apiUrl}/${id}`, formData);
+    return this.http.put(`${this.apiUrl}/${id}`, formData, {
+      headers: this.getHeaders(),
+    });
   }
 
   deleteCar(id: string): Observable<any> {
-    return this.http.delete(`${this.apiUrl}/${id}`);
+    return this.http.delete(`${this.apiUrl}/${id}`, {
+      headers: this.getHeaders(),
+    });
   }
 
   getCars(): Observable<any> {
-    return this.http.get(this.apiUrl);
+    return this.http.get(this.apiUrl, { headers: this.getHeaders() });
+  }
+
+  getCarById(id: string): Observable<any> {
+    return this.http.get(`${this.apiUrl}/${id}`, {
+      headers: this.getHeaders(),
+    });
   }
 }
