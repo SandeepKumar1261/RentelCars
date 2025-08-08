@@ -1,1 +1,127 @@
-<p>view-car works!</p>
+<div *ngIf="carDetails" class="p-4 max-w-6xl mx-auto">
+  <div
+    class="bg-white rounded-2xl shadow-lg overflow-hidden transition-transform transform hover:scale-[1.01] md:flex"
+  >
+    <!-- Image -->
+    <div class="md:w-1/2 h-64 md:h-auto">
+      <img
+        [src]="carDetails.ImageLink"
+        [alt]="carDetails.CarName + ' image'"
+        class="w-full h-full object-cover"
+        loading="lazy"
+      />
+    </div>
+
+    <!-- Details -->
+    <div class="p-4 md:p-6 md:w-1/2 flex flex-col flex-1">
+      <!-- Top info -->
+      <div class="flex items-start justify-between gap-4">
+        <div>
+          <h1
+            class="text-2xl sm:text-3xl font-semibold text-slate-800 leading-tight"
+          >
+            {{ carDetails.CarName }}
+          </h1>
+          <p class="text-sm text-slate-500 mt-1">
+            {{ carDetails.Model }} · {{ carDetails.CarType }}
+          </p>
+        </div>
+
+        <!-- Availability badge -->
+        <span
+          class="inline-flex items-center px-3 py-1 rounded-full text-sm font-medium shadow-sm"
+          [ngClass]="{
+            'bg-green-50 text-green-800 ring-1 ring-green-100': carDetails.AvailabilityStatus === 'Available',
+            'bg-yellow-50 text-yellow-800 ring-1 ring-yellow-100': carDetails.AvailabilityStatus === 'Limited',
+            'bg-red-50 text-red-800 ring-1 ring-red-100': carDetails.AvailabilityStatus !== 'Available' && carDetails.AvailabilityStatus !== 'Limited'
+          }"
+        >
+          {{ carDetails.AvailabilityStatus }}
+        </span>
+      </div>
+
+      <!-- Specs grid -->
+      <div class="mt-4 grid grid-cols-2 gap-3 text-sm text-slate-600">
+        <div>
+          <span class="text-xs text-slate-400">Fuel</span>
+          <span class="block mt-1 font-medium text-slate-800"
+            >{{ carDetails.FuelType }}</span
+          >
+        </div>
+        <div>
+          <span class="text-xs text-slate-400">Deposit</span>
+          <span class="block mt-1 font-medium text-slate-800"
+            >₹{{ carDetails.Deposit }}</span
+          >
+        </div>
+        <div>
+          <span class="text-xs text-slate-400">Rent / day</span>
+          <span class="block mt-1 font-medium text-slate-800"
+            >₹{{ carDetails.RentPerDay }}</span
+          >
+        </div>
+        <div>
+          <span class="text-xs text-slate-400">Vehicle ID</span>
+          <span class="block mt-1 text-xs text-slate-500 break-all"
+            >{{ carDetails._id }}</span
+          >
+        </div>
+      </div>
+
+      <!-- Description -->
+      <p class="mt-4 text-sm text-slate-600 flex-1">
+        Premium, well-maintained {{ carDetails.CarName }} ({{ carDetails.Model
+        }}). Comfortable seating, good fuel efficiency, and reliable performance
+        — perfect for city trips and long drives.
+      </p>
+
+      <!-- Actions -->
+      <div class="mt-4 flex flex-wrap gap-3">
+        <a
+          routerLink="/book/{{carDetails._id}}"
+          class="inline-flex justify-center items-center gap-2 px-4 py-2 rounded-lg text-white font-semibold bg-sky-600 hover:bg-sky-700 focus:outline-none focus-visible:ring-2 focus-visible:ring-sky-300"
+        >
+          Book now
+          <svg
+            class="w-4 h-4"
+            fill="none"
+            viewBox="0 0 24 24"
+            stroke="currentColor"
+          >
+            <path
+              stroke-linecap="round"
+              stroke-linejoin="round"
+              stroke-width="2"
+              d="M14 5l7 7m0 0l-7 7m7-7H3"
+            />
+          </svg>
+        </a>
+
+        <button
+          (click)="openContactModal(carDetails)"
+          class="inline-flex justify-center items-center gap-2 px-4 py-2 rounded-lg border border-slate-200 text-slate-700 bg-white hover:shadow-sm focus:outline-none focus-visible:ring-2 focus-visible:ring-slate-200"
+        >
+          Contact owner
+        </button>
+
+        <a
+          [href]="carDetails.ImageLink"
+          target="_blank"
+          rel="noopener"
+          class="ml-auto text-xs text-slate-400 hover:text-slate-600"
+        >
+          View full image
+        </a>
+      </div>
+    </div>
+  </div>
+
+  <!-- Footer -->
+  <div
+    class="px-6 py-3 border-t border-slate-100 text-xs text-slate-500 flex flex-wrap gap-3"
+  >
+    <div>Listed on: N/A</div>
+    <div>Condition: Excellent</div>
+    <div>Seats: 5</div>
+  </div>
+</div>

@@ -16,7 +16,6 @@ export class Admin implements OnInit {
   showModal: boolean = false;
   selectedCar: Car | null = null;
 
-  // Filtering, Sorting, Pagination
   filter = {
     CarName: '',
     Model: '',

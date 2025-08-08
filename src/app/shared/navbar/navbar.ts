@@ -9,7 +9,7 @@ import { Router } from '@angular/router';
 })
 export class Navbar {
   isAdmin: string | null = null;
-  menuOpen: boolean = false; // for mobile menu toggle
+  isMenuOpen: boolean = false; // for mobile menu toggle
 
   constructor(private router: Router) {}
 
@@ -20,13 +20,13 @@ export class Navbar {
   }
 
   toggleMenu() {
-    this.menuOpen = !this.menuOpen;
+    this.isMenuOpen = !this.isMenuOpen;
   }
 
   logout() {
     localStorage.clear();
     this.isAdmin = null;
-    this.menuOpen = false;
+    this.isMenuOpen = false;
     this.router.navigate(['/login']);
   }
 }

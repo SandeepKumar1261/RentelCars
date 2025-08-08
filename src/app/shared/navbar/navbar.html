@@ -1,36 +1,78 @@
-<nav
-  *ngIf="isAdmin"
-  class="bg-gray-800 text-white flex items-center justify-between p-4 shadow-md"
->
-  <div class="text-xl font-semibold">
-    <a routerLink="/" class="hover:text-gray-300">🚗 CarRental</a>
+<nav *ngIf="isAdmin" class="bg-gray-800 text-white shadow-md">
+  <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+    <div class="flex justify-between items-center h-16">
+      <!-- Brand -->
+      <div class="flex items-center">
+        <a
+          routerLink="/"
+          class="flex items-center text-xl font-bold hover:text-gray-300"
+        >
+          🚗 CarRental
+        </a>
+      </div>
+
+      <!-- Hamburger Button (Mobile) -->
+      <div class="flex md:hidden">
+        <button
+          type="button"
+          (click)="isMenuOpen = !isMenuOpen"
+          class="text-gray-300 hover:text-white focus:outline-none"
+        >
+          <svg
+            class="h-6 w-6"
+            fill="none"
+            stroke="currentColor"
+            viewBox="0 0 24 24"
+          >
+            <path
+              stroke-linecap="round"
+              stroke-linejoin="round"
+              stroke-width="2"
+              d="M4 6h16M4 12h16M4 18h16"
+            />
+          </svg>
+        </button>
+      </div>
+
+      <!-- Menu (Desktop) -->
+      <div class="hidden md:flex items-center space-x-6 text-sm">
+        <ng-container *ngIf="isAdmin === 'admin'">
+          <a routerLink="/users" class="hover:text-gray-400">Users</a>
+          <a routerLink="/cars" class="hover:text-gray-400">Cars</a>
+        </ng-container>
+
+        <ng-container *ngIf="isAdmin === 'user'">
+          <a routerLink="/dashboard" class="hover:text-gray-400">Dashboard</a>
+          <a routerLink="/bookings" class="hover:text-gray-400">Bookings</a>
+        </ng-container>
+
+        <button
+          (click)="logout()"
+          class="bg-red-500 hover:bg-red-600 px-3 py-1 rounded text-sm"
+        >
+          Logout
+        </button>
+      </div>
+    </div>
   </div>
 
-  <ul class="flex items-center space-x-6 text-sm">
-    <!-- Admin Links -->
+  <!-- Mobile Menu -->
+  <div *ngIf="isMenuOpen" class="md:hidden px-4 pb-3 space-y-2">
     <ng-container *ngIf="isAdmin === 'admin'">
-      <li><a routerLink="/users" class="hover:text-gray-400">Users</a></li>
-      <li><a routerLink="/cars" class="hover:text-gray-400">Cars</a></li>
+      <a routerLink="/users" class="block hover:text-gray-400">Users</a>
+      <a routerLink="/cars" class="block hover:text-gray-400">Cars</a>
     </ng-container>
 
-    <!-- Normal User Links -->
     <ng-container *ngIf="isAdmin === 'user'">
-      <li>
-        <a routerLink="/dashboard" class="hover:text-gray-400">Dashboard</a>
-      </li>
-      <li>
-        <a routerLink="/bookings" class="hover:text-gray-400">Bookings</a>
-      </li>
+      <a routerLink="/dashboard" class="block hover:text-gray-400">Dashboard</a>
+      <a routerLink="/bookings" class="block hover:text-gray-400">Bookings</a>
     </ng-container>
 
-    <!-- Common Logout Button -->
-    <li>
-      <button
-        (click)="logout()"
-        class="bg-red-500 hover:bg-red-600 px-3 py-1 rounded text-sm"
-      >
-        Logout
-      </button>
-    </li>
-  </ul>
+    <button
+      (click)="logout()"
+      class="bg-red-500 hover:bg-red-600 px-3 py-1 rounded text-sm w-full"
+    >
+      Logout
+    </button>
+  </div>
 </nav>
